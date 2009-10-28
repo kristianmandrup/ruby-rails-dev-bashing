@@ -28,13 +28,15 @@ function hobo_help {
 		echo "hb_theme [name]         : generate new hobo THEME plugin, using assets from /public and app/views"
 		echo "add_hb_theme [name]     : add hobo THEME from to hobo app (must be in vendor/plugins)"	
 		echo ""
-		echo "hb_edge_gem_install [version] [sudo]: Install edge Hobo cloned from github as a gem"	
+		echo "hb_edge_gem_install [version] [sudo] : Install edge Hobo cloned from github as a gem"	
+		echo "gem_install_local [name] [version]   : Install local gem from .gem file"		
 			
 	fi
 
 	if [[ $context == 'install' ]]		 		
 	then 
-		echo "hb_edge_gem_install [version] [sudo]: Install edge Hobo cloned from github as a gem"	
+		echo "hb_edge_gem_install [version] [sudo] : Install edge Hobo cloned from github as a gem"	
+		echo "gem_install_local [name] [version]   : Install local gem from .gem file"
 	fi
 
 	if [[ $context == 'app' ]]		 		
@@ -223,6 +225,14 @@ function hb_edge_gem_install {
     echo "install hobo gems to local gem repo"
 	$sudo gem install hobo-$version.gem --local
 }
+
+function gem_install_local {
+	$name
+    $version=$1	
+	shift 2
+	sudo gem install $name-$version.gem --local	$@
+}
+
 
 function hbv {
 	name=$1
