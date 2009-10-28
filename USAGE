@@ -1,0 +1,10 @@
+USAGE INSTRUCTIONS
+==================
+
+1. Put all .sh files in ~/bash_scripts
+2. mate ~.bash_profile (or similar)
+3. Insert this line at the bottom:
+
+source bash_scripts/include_helpers.sh
+
+
