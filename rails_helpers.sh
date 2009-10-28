@@ -193,7 +193,7 @@ function rg_con {
 function rg_modl {
   name=$1
   shift 1
-  sg model $name [$@]
+  sg model $name $@
 }
 
 function rg_res {
