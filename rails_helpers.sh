@@ -6,32 +6,85 @@ function rails_help {
 	if [[ $context == '' ]]		 		
 	then 	
 		echo "Rails shortcut commands:"	
-		echo "Context specifiers:   app, migration, plugin"
+		echo "Context specifiers:   app, migration, domain, plugin, cleanup, console, info, todo"
 		echo ""	
+		
 		echo "rls [app] *                 : create rails app"	
 		echo "rapp_rb [template] [app] *  : create rails app using named template from ryanbates github repo"	
 		echo "rapp [template] [app] *     : create rails app using named template from local ~/rails-templates/"
+		
 		echo "ss *                        : start rails server"
 		echo "ssp [port] *                : start rails server on specific port"
 		echo "sg *                        : run script/generate"
-		echo "rmig [name] *               : create named rails migration"		
-		echo "rmign [name] *              : create named rails migration and run it now!"		
-		echo "rpl_in [name]               : install rails plugin"	
-		echo "instpl_ghub [repo] [name]   : install rails plugin from github repo"
+		
+		echo "rg_mig [name] *             : create named rails migration"		
+		echo "rg_mig_noe [name] *         : create named rails migration and run it now!"
+
+		echo "rg_modl [name] field:type * : create named rails model with fields"		
+		echo "rg_contr [name] m1 m2 *     : create named rails controller with method placeholders"
+		echo "rg_scaf [name] m1 m2 *      : create a rails scaffold to produce migration, model, controller, route and views"
+
+		echo "rcache_clear                : clear rails cache"		
+		echo "rlog_clear                  : clear rails log directory"
+				
+		echo "rpl_inst [name]             : install rails plugin"	
+		echo "rpl_inst_ghub [name] [repo] : install rails plugin from github repo"
+		
 		echo "rperf                       : run performance script on application"
+		
 		echo "rabout                      : print info on rails version used in app"
+		echo "routes                      : display routes"
+		
 		echo "rcons                       : start rails console"
 		echo "rdbcons                     : rails database console"
+
 		echo "rpl *                       : rails plugin"
 		echo "rpl_cr [name]               : create (generate) rails plugin"
 		echo "rpl_un [name]               : uninstall rails plugin"
+
 		echo "rgit_ignore                 : Create .gitignore file for rails app"
+	fi
+
+	if [[ $context == 'console' ]]		 		
+	then 	
+		echo "rcons                       : start rails console"
+		echo "rdbcons                     : rails database console"
+	fi
+
+	if [[ $context == 'todo' ]]	
+	then	 		
+		echo "r_todo_all                   : search for all kinds of todo comments"		
+		echo "r_fixme                      : search for all fixme comments"
+		echo "r_optimize                   : search for all fixme comments"		
+		echo "r_todo                       : search for all fixme comments"				
+	fi
+
+	if [[ $context == 'info' ]]		 		
+	then 	
+		echo "rabout                      : print info on rails version used in app"
+		echo "routes                      : display routes"
 	fi
 
 	if [[ $context == 'migration' ]]		 		
 	then 	
-		echo "rmig [name] *               : create named rails migration"		
-		echo "rmign [name] *              : create named rails migration and run it now!"			
+		echo "rg_mig [name] *             : create named rails migration"		
+		echo "rg_mig_noe [name] *         : create named rails migration and run it now!"
+	fi
+
+	if [[ $context == 'domain' ]]
+	then		 		
+		echo "rg_mig [name] *             : create named rails migration"		
+		echo "rg_mig_noe [name] *         : create named rails migration and run it now!"
+
+		echo "rg_modl [name] field:type * : create named rails model with fields"		
+		echo "rg_contr [name] m1 m2 *     : create named rails controller with method placeholders"
+		echo "rg_scaf [name] m1 m2 *      : create a rails scaffold to produce migration, model, controller, route and views"
+	fi
+
+	if [[ $context == 'cleanup' ]]		 		
+	then 	
+		echo "rcache_clear                : clear rails cache"		
+		echo "rlog_clear                  : clear rails log directory"
 	fi
 
 	if [[ $context == 'plugin' ]]		 		
@@ -52,6 +105,22 @@ function rails_help {
 		echo "rapp [template] [app] *     : create rails app using named template from local ~/rails-templates/"
 	fi
 	
+}
+
+function r_todo_all { 
+	rake notes
+}
+
+function r_todo { 
+	rake notes:todo
+}
+
+function r_fixme { 
+	rake notes:fixme
+}
+
+function r_optimize { 
+	rake notes:optimize
 }
 
 
@@ -100,7 +169,7 @@ function rapp_rb {
   rails $appname -m http://github.com/ryanb/rails-templates/raw/master/$template.rb $@
 }
 
-function rmig {
+function rg_mig {
   name=$1
   shift 1
   echo "Generating MIGRATION '$name' ..."   
@@ -108,12 +177,49 @@ function rmig {
 }
 
 # create rails migration and run now
-function rmign {
+function rg_mig_now {
   name=$1
   shift 1
   rmig $name
   rdbm
 }
+
+function rg_con {
+  name=$1
+  shift 1
+  sg controller $name $@
+}
+
+function rg_modl {
+  name=$1
+  shift 1
+  sg model $name [$@]
+}
+
+function rg_res {
+  name=$1
+  shift 1
+  sg resource $name $@
+}
+
+function rg_scaf {
+  name=$1
+  shift 1
+  sg scaffold $name $@
+}
+
+function rcache_clear {
+	rake tmp:cache:clear
+}
+
+function rlog_clear {
+	rake log:clear
+}
+
+function routes {
+	rake routes
+}
+
 
 function ss {
   script/server $@
@@ -160,14 +266,14 @@ function rpl_cr {
   sg plugin $@
 }
 
-function rpl_in {
+function rpl_inst {
   name=$1
   shift 1   
   echo "INSTALL PLUGIN '$name' ..."
   plugin install $name
 }
 
-function rpl_un {
+function rpl_uninst {
   name=$1
   shift 1   
   echo "UNINSTALL PLUGIN '$name' ..."
@@ -175,13 +281,13 @@ function rpl_un {
 }
 
 
-function instpl_ghub {
-  name=$1
-  pl_name=$2
+function rpl_inst_ghub {
+  repo_name=$2
+  plugin_name=$1
   shift 2   
-  echo "INSTALL PLUGIN '$pl_name' from '$name' on github ..."
+  echo "INSTALL PLUGIN '$plugin_name' from '$repo_name' on github ..."
   cd vendor/plugins
-  gchub $name $pl_name
+  gchub $repo_name $plugin_name
   rm -rf .git*
   cd ../..
 }
