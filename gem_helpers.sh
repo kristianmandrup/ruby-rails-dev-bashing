@@ -3,7 +3,10 @@
 function gem_help {
 	echo "Gem shortcut commands:"
 	echo "gem_install [name]     : install gem, fx gin hobo-0.8.8 from local .gem file"	
+	echo "sgem_install [name]    : sudo install gem"	
 	echo "gem_uninstall [name]   : uninstall gem"
+	echo "sgem_uninstall [name]   : sudo uninstall gem"
+	
 	echo "jewel_build [name]     : build a new gem project using jeweler"
 	echo "jewel_proj_repo [name] : build a new gem project using jeweler and set up repository for it on github"
 				
@@ -117,11 +120,22 @@ function gem_install {
 	gem install $name.gem --local	
 }
 
+function sgem_install {
+  	name=$1
+  	shift 1	
+	sudo gem install $name.gem --local	
+}
+
+function sgem_uninstall {
+  	name=$1
+  	shift 1	
+	sudo gem uninstall $name
+}
 
 function gem_uninstall {
   	name=$1
   	shift 1	
-	sudo gem uninstall $name
+	gem uninstall $name
 }
 
 function gem_build_manf {
