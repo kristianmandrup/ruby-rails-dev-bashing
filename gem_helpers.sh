@@ -2,17 +2,16 @@
 
 function gem_help {
 	echo "Gem shortcut commands:"
-	echo "gin [name]             : install gem, fx gin hobo-0.8.8"	
-	echo "sgin [name]            : sudo install gem"	
-	echo "gun [name]             : uninstall gem"
-	echo "jewel [name]           : build a new gem project using jeweler"
-	echo "jewel_repo [name]      : build a new gem project using jeweler and set up repository for it on github"
+	echo "gem_install [name]     : install gem, fx gin hobo-0.8.8 from local .gem file"	
+	echo "gem_uninstall [name]   : uninstall gem"
+	echo "jewel_build [name]     : build a new gem project using jeweler"
+	echo "jewel_proj_repo [name] : build a new gem project using jeweler and set up repository for it on github"
 				
-	echo "gbuild                 : build a new gem from a named gem specification file"		
+	echo "gem_build_f_spec       : build a new gem from a named gem specification file"		
 	echo "gem_push               : push gem to gemcutter"			
-	echo "manf                   : create gem manifest"		
-	echo "rgem                   : create gem from manifest"
-	echo "release_gem            : release gem to gemcutter"				
+	echo "gem_build_manf         : create gem manifest"		
+	echo "gem_build              : create gem using rake task"
+	echo "gem_release            : release gem to gemcutter"				
 	echo "gem_version            : display gem version"				
 	echo "gem_init_version       : set gem initial version"					
 		
@@ -23,8 +22,8 @@ function gem_help {
 	echo "gem_install            : install gem (jewel)"			
 	echo "gem_check_depend       : check all dependencies of gem"				
 		
-	echo "gfind [name]           : find named gem"		
-	echo "glist                  : list all gems installed"		
+	echo "gem_find [name]           : find named gem"		
+	echo "gem_list                  : list all gems installed"		
 	echo "github_config [user] [token] : configure your github account locally"	
 }
 
@@ -59,7 +58,7 @@ function gem_patch {
 }
 
 
-function release_gem {
+function gem_release {
 	rake gemcutter:release
 }
 
@@ -67,13 +66,13 @@ function gem_version {
 	rake version	
 }
 
-function jewel_repo {
+function jewel_proj_repo {
   	name=$1
   	shift 1	
 	jewel $name --create-repo	
 }
 
-function jewel {
+function jewel_build {
   	name=$1
   	shift 1	
 	jeweler $name --gemcutter
@@ -88,13 +87,13 @@ function gem_init_version {
 	rake version:bump:minor
 }	
 
-function gfind {
+function gem_find {
   	name=$1
   	shift 1	
 	gem list $name
 }
 
-function gbuild {
+function gem_build_f_spec {
   	name=$1
   	shift 1	
 	gem build $name.gemspec
@@ -107,34 +106,28 @@ function gem_push {
 }
 
 
-function glist {
+function gem_list {
 	gem list 
 }
 
 
-function gin {
+function gem_install {
   	name=$1
   	shift 1	
 	gem install $name.gem --local	
 }
 
-function sudo_gin {
-  	name=$1
-  	shift 1	
-	sudo gem install $name.gem --local	
-}
 
-
-function gun {
+function gem_uninstall {
   	name=$1
   	shift 1	
 	sudo gem uninstall $name
 }
 
-function manf {
+function gem_build_manf {
 	rake manifest	
 }
 
-function rgem {
+function gem_build {
 	rake gem
 }
