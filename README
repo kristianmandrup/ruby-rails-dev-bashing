@@ -1,0 +1,21 @@
+Ruby and Rails bash functions for application development
+=========================================================
+
+This is a library of console scripts that I have developed as needed to facilitate working 
+with Ruby & Rails development, using Hobo, Textmate, Heroku, Git, MySql etc.
+Feel free to fork and provide your own additions or suggest more utility scripts. 
+There may also be some bugs here and there for functions I rarely use...
+
+---
+Kristian Mandrup, kmandrup@gmail.com
+---
+
+
+USAGE INSTRUCTIONS
+==================
+
+1. Put all .sh files in ~/bash_scripts
+2. mate ~.bash_profile (or similar)
+3. Insert this line at the bottom:
+
+source bash_scripts/include_helpers.sh
