@@ -6,114 +6,123 @@ function git_help {
 	if [[ $context == '' ]]		 		
 	then 
 		echo "Git shortcut commands:"
-		echo "Context specifiers:   branch, sync, clone, project"
+		echo "Context specifiers:   project, sync, branch, clone, misc"
+		echo "- usage: git_help [context]"				
 		echo ""
-		echo "cmit [msg]                : Git commit with latest additions"	
-		echo "crb [name]                : Git create named branch"	
-		echo "swb [name]                : Git switch to named branch"	
-		echo "swb_m                     : Git switch to MASTER branch"			
-		echo "git_prj_new [name]        : create app folder with git repository. Push to github account"	
-		echo "git_prj [name]            : create new git repository. Push to github account"
-		echo "git_exprj [name]          : push existing git repository to github account"	
-		echo "gpom                      : Push git project to origin master branch"
-		echo "gpush                     : Push git project (fx to origin master branch)"
-		echo "gpull                     : Pull git project (fx from origin master branch)"		
-		echo "gc [location]             : Git clone project from location"
-		echo "gchub [repo] [project]    : Git clone project from named github repository"
-		echo "gcmy [project]            : Git clone project from your own github repository"
-		echo "rgit_ignore               : Create .gitignore file for rails app"	
+		echo "============================================================================"		
+		echo "project"
+		echo "============================================================================"				
+		echo "git_prj_new [name]         : create app folder with git repo -> github"	
+		echo "git_prj [name]             : create new git repository -> github"
+		echo "git_exprj [name]           : push git repo -> github"	
+		
+		echo "============================================================================"		
+		echo "sync"
+		echo "============================================================================"		
+		echo "gc [msg]                   : Git commit with latest additions"	
+		echo "gc_all [msg]               : Git add all and commit"	
+		echo "gpush                      : Push git project (fx to origin master branch)"
+		echo "gpull                      : Pull git project (fx from origin master branch)"		
+		echo "gpush_om                   : Push git project to origin master branch"
+		
+		echo "============================================================================"		
+		echo "branch"
+		echo "============================================================================"		
+		echo "gcb [name]                 : Git create named branch"	
+		echo "gsb [name]                 : Git switch to named branch"	
+		echo "gsbm                       : Git switch to MASTER branch"			
+
+		echo "============================================================================"		
+		echo "clone"
+		echo "============================================================================"		
+		echo "gcl [location]             : Git clone project from location"
+		echo "gcl_hub [repo] [project]   : Git clone project from named github repository"
+		echo "gcl_my [project]           : Git clone project from your own github repository"
+
+		echo "============================================================================"		
+		echo "misc"
+		echo "============================================================================"		
+		echo "github_config [user] [token] : configure your github account locally"					
 	fi
 
 	if [[ $context == 'context' ]]		 		
 	then 
-		echo "Git help context specifiers   : branch, sync, clone, project"
+		echo "Context specifiers:   project, sync, branch, clone, misc"
+	fi
+
+	if [[ $context == 'project' ]]		 
+	then
+		echo "============================================================================"		
+		echo "project"
+		echo "============================================================================"				
+		echo "git_prj_new [name]         : create app folder with git repo -> github"	
+		echo "git_prj [name]             : create new git repository -> github"
+		echo "git_exprj [name]           : push git repo -> github"	
 	fi
 	
 	if [[ $context == 'branch' ]]		 
 	then
-		echo "crb [name]                : Git create named branch"	
-		echo "swb [name]                : Git switch to named branch"	
-		echo "swb_m                     : Git switch to MASTER branch"	
-		echo "mb_m [name]               : Git merge named branch into MASTER branch"	
-		echo "rb_m                      : Git merge MASTER branch into current branch"					
-	fi
+		echo "============================================================================"		
+		echo "branch"
+		echo "============================================================================"		
+		echo "gcb [name]                 : Git create named branch"	
+		echo "gsb [name]                 : Git switch to named branch"	
+		echo "gsbm                       : Git switch to MASTER branch"							
+		echo "gmbm                       : Git merge branch with MASTER branch"							
+		echo "gmmc                       : Git merge MASTER branch with current branch"							
+		echo "gmm                        : Git merge MASTER branch (?)"							
+	fi		
 	
-	if [[ $context == 'project' ]]		 
+	if [[ $context == 'sync' ]] 
 	then
-		echo "git_prj_new [name]        : create app folder with git repository. Push to github account"	
-		echo "git_prj [name]            : create new git repository. Push to github account"
-		echo "git_exprj [name]          : push existing git repository to github account"	
-	fi
+		echo "============================================================================"		
+		echo "sync"
+		echo "============================================================================"		
+		echo "gc [msg]                   : Git commit with latest additions"	
+		echo "gc_all [msg]               : Git add all and commit"	
+		echo "gpush                      : Push git project (fx to origin master branch)"
+		echo "gpull                      : Pull git project (fx from origin master branch)"		
+		echo "gpush_m                    : Push git project to origin master branch"
+	fi 
+
 
 	if [[ $context == 'clone' ]]
 	then
-		echo "gc [location]             : Git clone project from location"
-		echo "gchub [repo] [project]    : Git clone project from named github repository"
-		echo "gcmy [project]            : Git clone project from your own github repository"
+		echo "============================================================================"		
+		echo "clone"
+		echo "============================================================================"		
+		echo "gcl [location]             : Git clone project from location"
+		echo "gcl_hub [repo] [project]   : Git clone project from named github repository"
+		echo "gcl_my [project]           : Git clone project from your own github repository"
 	fi 
 
-	if [[ $context == 'sync' ]] 
+	if [[ $context == 'misc' ]] 
 	then
-		echo "gpom                      : Push git project to origin master branch"
-		echo "gpush                     : Push git project (fx to origin master branch)"
-		echo "gpull                     : Pull git project (fx from origin master branch)"		
-	fi 
+		echo "============================================================================"		
+		echo "misc"
+		echo "============================================================================"		
+		echo "github_config [user] [token] : configure your github account locally"					
+	fi
 	
 }
 
+# project, sync, branch, clone, misc"
 
-function cmit {
-    msg=$1
-    shift 1
-    git commit -a -m "$msg"
-}
+#=======================
+# Project
+#=======================
 
-function crb {
+# create new git project from scratch
+function git_prj_new {
     name=$1
     shift 1
-	git checkout -b $name	
+	echo "Creating directory for '$name'"
+    mkdir $name
+    cd $name
+    git_prj $name
 }
 
-function swb {
-    name=$1
-    shift 1
-	git checkout $name	
-}
-
-function mb_m {
-    name=$1
-    shift 1
-	swb_m
-	echo "Merging '$name' with master branch"	
-	git pull . $name	
-}
-
-function rb_m {
-	echo "Merging master with current branch"
-	git rebase master	
-}
-
-
-function swb_m {
-	git checkout master	
-}
-
-function gmm {
-	git merge master
-}
-
-		
-
-function git_exprj {
-    name=$1
-    shift 1
-    echo "Pushing Git project '$name' to github"
-    git add .
-    git commit -m 'first commit'
-    git remote add origin git@github.com:$GITHUB_NAME/$name.git
-    git push origin master
-}
-
+# create new git project from existing folder
 function git_prj {
     name=$1
     shift 1
@@ -127,20 +136,33 @@ function git_prj {
     git_exprj $name
 }
 
-
-function git_prj_new {
+# update and push existing git project to github
+function git_exprj {
     name=$1
     shift 1
-	echo "Creating directory for '$name'"
-    mkdir $name
-    cd $name
-    git_prj $name
+    echo "Pushing Git project '$name' to github"
+    git add .
+    git commit -m 'first commit'
+    git remote add origin git@github.com:$GITHUB_NAME/$name.git
+    git push origin master
 }
 
 
-function gpom {
-  echo "Git: pushing to original master"
-  git push origin master
+#=======================
+# Sync
+#=======================
+
+function gc {
+    msg=$1
+    shift 1
+    git commit -a -m "$msg"
+}
+
+function gc_all {
+    msg=$1
+    shift 1
+	git add . 
+    git commit -a -m "$msg"
 }
 
 function gpull {
@@ -153,13 +175,65 @@ function gpush {
   git push
 }
 
+function gpush_m {
+  echo "Git: pushing to original master"
+  git push origin master
+}
 
-function gc {
+
+#=======================
+# Branch
+#=======================
+
+# create branch [name]
+function gcb {
+    name=$1
+    shift 1
+	git checkout -b $name	
+}
+
+# switch branch to [name]
+function gsb {
+    name=$1
+    shift 1
+	git checkout $name	
+}
+
+# switch branch to master
+function gsbm {
+	git checkout master	
+}
+
+# merge branch with master branch
+function gmbm {
+    name=$1
+    shift 1
+	swb_m
+	echo "Merging '$name' with master branch"	
+	git pull . $name	
+}
+
+# merge master branch with current branch
+function gmmc {
+	echo "Merging master branch with current branch"
+	git rebase master	
+}
+
+# merge master branch
+function gmm {
+	git merge master
+}
+
+
+#=======================
+# Clone
+#=======================
+function gcl {
   echo "Git clone"
   git clone $@
 }
 
-function gchub {
+function gcl_hub {
   name=$1
   pl_name=$2
   shift 2
@@ -167,9 +241,30 @@ function gchub {
   git clone git://github.com/$name/$pl_name.git
 }
 
-function gcmy {
+function gcl_my {
   name=$1
   shift 1
   echo "Git clone own project from github '$name'"
   git clone git@github.com:$GITHUB_NAME/$name.git
 }
+
+
+#=======================
+# Misc
+#=======================
+
+function github_config {
+  	user=$1
+	token=$2
+  	shift 2
+	git config --global github.user $user
+	git config --global github.token $token	
+}
+
+
+
+
+
+
+
+
