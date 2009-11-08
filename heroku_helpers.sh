@@ -6,10 +6,21 @@ function heroku_help {
 	if [[ $context == '' ]]		 		
 	then 
 		echo "Heroku shortcut commands:"
-		echo "Context specifiers:   app, db"
+		echo "Context specifiers:   app, deploy, db"
 		echo ""		
+		echo "============================================================================"		
+		echo "app"
+		echo "============================================================================"										
 		echo "hcr [name]       : create heroku application (requires git repository)"	
+		echo ""		
+		echo "============================================================================"		
+		echo "deploy"
+		echo "============================================================================"										
 		echo "hpush            : push heroku app from git repo to heroku server"
+		echo ""
+		echo "============================================================================"		
+		echo "db"
+		echo "============================================================================"						
 		echo "hdb_push         : push local database to heroku server"
 		echo "hdb_pull         : pull heroku database to local"
 		echo "hdb_mig          : run database migrations on heroku server"
@@ -18,14 +29,29 @@ function heroku_help {
 
 	if [[ $context == 'app' ]]		 		
 	then 
+		echo "============================================================================"		
+		echo "app"
+		echo "============================================================================"						
 		echo "hcr [name]       : create heroku application (requires git repository)"	
-		echo "hpush            : push heroku app from git repo to heroku server"
 	fi
+
+	if [[ $context == 'deploy' ]]		 		
+	then 
+		echo "============================================================================"		
+		echo "deploy"
+		echo "============================================================================"						
+		echo "hpush            : push heroku app from git repo to heroku server"
+		echo "hpush_m          : push heroku app to heroku server MASTER branch"
+	fi
+
 
 	context=$1
 	shift
 	if [[ $context == 'db' ]]		 		
 	then 
+		echo "============================================================================"		
+		echo "db"
+		echo "============================================================================"						
 		echo "hdb_push         : push local database to heroku server"
 		echo "hdb_pull         : pull heroku database to local"
 		echo "hdb_mig          : run database migrations on heroku server"
@@ -33,6 +59,10 @@ function heroku_help {
 	fi
 }
 
+#=======================
+# App
+#=======================
+# create Heroku application (by setting identifier in .git)
 function hcr {
      name=$1
      shift 1
@@ -40,11 +70,23 @@ function hcr {
      heroku create $name $@
 }
 
-function hpush {
-     echo 'Heroku PUSH app'
+#=======================
+# Deploy
+#=======================
+function hpush_m {
+     echo 'Heroku PUSH app to master'
      heroku push origin master
 }
 
+
+function hpush {
+     echo 'Heroku PUSH app'
+     heroku push
+}
+
+#=======================
+# Database
+#=======================
 function hdb_push {
       echo 'Heroku PUSH locl database to server'
      heroku db:push

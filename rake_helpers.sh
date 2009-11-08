@@ -9,12 +9,31 @@ function rake_help {
 		echo "Rake shortcut commands:"
 		echo "Rake context specifiers:   rollback, redo"
 		echo ""	
+		echo "============================================================================"		
+		echo "migrations"
+		echo "============================================================================"								
 		echo "rdbm [name] *    : run database migrations"	
+
+		echo "============================================================================"		
+		echo "rollback"
+		echo "============================================================================"								
 		echo "rbk *            : rollback database migrations, fx rbk STEP=3"
 		echo "rback [# steps]  : rollback database migrations a number of steps, fx rback 7"
+
+		echo "============================================================================"		
+		echo "redo"
+		echo "============================================================================"								
 		echo "rdo *            : redo database migrations, fx redo STEP=2"
 		echo "redo [# steps]   : redo database migrations a number of steps, fx redo 7"
+		
+		echo "============================================================================"		
+		echo "reset"
+		echo "============================================================================"								
 		echo "reset            : reset database"
+		
+		echo "============================================================================"		
+		echo "gems"
+		echo "============================================================================"								
 		echo "inst_gems        : install gems configured for rails environment.rb"
 		
 	fi

@@ -8,41 +8,90 @@ function rails_help {
 		echo "Rails shortcut commands:"	
 		echo "Context specifiers:   app, migration, domain, plugin, cleanup, console, info, todo"
 		echo ""	
+
+		echo "============================================================================"		
+		echo "app"
+		echo "============================================================================"						
 		
 		echo "rls [app] *                 : create rails app"	
 		echo "rapp_rb [template] [app] *  : create rails app using named template from ryanbates github repo"	
 		echo "rapp [template] [app] *     : create rails app using named template from local ~/rails-templates/"
 		
+		echo "============================================================================"		
+		echo "server"
+		echo "============================================================================"						
+		
 		echo "ss *                        : start rails server"
 		echo "ssp [port] *                : start rails server on specific port"
 		echo "sg *                        : run script/generate"
 		
+		echo "============================================================================"		
+		echo "migration"
+		echo "============================================================================"						
+		
 		echo "rg_mig [name] *             : create named rails migration"		
 		echo "rg_mig_noe [name] *         : create named rails migration and run it now!"
+
+		echo "============================================================================"		
+		echo "domain"
+		echo "============================================================================"						
 
 		echo "rg_modl [name] field:type * : create named rails model with fields"		
 		echo "rg_contr [name] m1 m2 *     : create named rails controller with method placeholders"
 		echo "rg_scaf [name] m1 m2 *      : create a rails scaffold to produce migration, model, controller, route and views"
 
+		echo "============================================================================"		
+		echo "cleanup"
+		echo "============================================================================"						
 		echo "rcache_clear                : clear rails cache"		
 		echo "rlog_clear                  : clear rails log directory"
 				
+		echo "============================================================================"		
+		echo "install"
+		echo "============================================================================"										
 		echo "rpl_inst [name]             : install rails plugin"	
 		echo "rpl_inst_ghub [name] [repo] : install rails plugin from github repo"
+
+		echo "============================================================================"		
+		echo "misc"
+		echo "============================================================================"						
 		
 		echo "rperf                       : run performance script on application"
+		echo "rgit_ignore                 : Create .gitignore file for rails app"		
+
+		echo "============================================================================"		
+		echo "info"
+		echo "============================================================================"						
 		
 		echo "rabout                      : print info on rails version used in app"
 		echo "routes                      : display routes"
 		
+		echo "============================================================================"		
+		echo "console"
+		echo "============================================================================"						
+		
 		echo "rcons                       : start rails console"
 		echo "rdbcons                     : rails database console"
+
+		echo "============================================================================"		
+		echo "plugin"
+		echo "============================================================================"						
 
 		echo "rpl *                       : rails plugin"
 		echo "rpl_cr [name]               : create (generate) rails plugin"
 		echo "rpl_un [name]               : uninstall rails plugin"
 
-		echo "rgit_ignore                 : Create .gitignore file for rails app"
+		echo "============================================================================"		
+		echo "todo"
+		echo "============================================================================"						
+
+		echo "r_todo_all                   : search for all kinds of todo comments"		
+		echo "r_fixme                      : search for all fixme comments"
+		echo "r_optimize                   : search for all fixme comments"		
+		echo "r_todo                       : search for all fixme comments"				
+
+
+
 	fi
 
 	if [[ $context == 'console' ]]		 		

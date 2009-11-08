@@ -5,15 +5,32 @@ alias restart_mysql="$MYSQLCOM restart"
 # MYSQL
 
 function mysql_help {
+	echo "============================================================================"		
+	echo "execution"
+	echo "============================================================================"						
 	echo "start_mysql       : start MySQL server"	
 	echo "stop_mysql        : stop MySQL server"	
 	echo "restart_mysql     : restart MySQL server"	
+	echo "mysql_kill    : shutdown mysql server!"						
+
+	echo "============================================================================"		
+	echo "console"
+	echo "============================================================================"						
+	
 	echo "msql          	: open mysql console"		
 	echo "msql_root 	    : open mysql console as user=ROOT"
+
+	echo "============================================================================"		
+	echo "misc"
+	echo "============================================================================"						
 	echo "msql_admin        : get list of mysql admin commands"
+
+	echo "============================================================================"		
+	echo "db"
+	echo "============================================================================"							
 	echo "create_db [name]  : create named mysql DB"				
 	echo "drop_db [name]    : drop named mysql DB"	
-	echo "mysql_kill    : shutdown mysql server!"					
+
 }
 
 function msql {
