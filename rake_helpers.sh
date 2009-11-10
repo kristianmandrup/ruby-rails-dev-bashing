@@ -32,13 +32,6 @@ function rake_help {
 		echo "reset            : reset database"
 
 		echo "============================================================================"		
-		echo "testing"
-		echo "============================================================================"								
-		echo "run_features     : run Cucumber features"
-		echo "run_tests        : run Unit tests"
-		echo "run_specs        : run RSpecs "
-		
-		echo "============================================================================"		
 		echo "gems"
 		echo "============================================================================"								
 		echo "inst_gems        : install gems configured for rails environment.rb"
@@ -56,22 +49,6 @@ function rake_help {
 		echo "rdo *            : redo database migrations, fx redo STEP=2"
 		echo "redo [# steps]   : redo database migrations a number of steps, fx redo 7"
 	fi
-}
-
-#=======================
-# Testing
-#=======================
-
-function run_features {
-	rake features
-}
-
-function run_tests {
-	rake tests
-}
-
-function run_specs {
-	rake spec
 }
 
 #=======================
