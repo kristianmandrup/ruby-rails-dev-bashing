@@ -10,5 +10,6 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 
 export GITHUB_NAME=yourname
 export JEWELER_OPTS="--rspec"
+export AUTOFEATURE=true
 
 source bash_scripts/include_helpers.sh

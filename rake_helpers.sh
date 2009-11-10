@@ -30,6 +30,13 @@ function rake_help {
 		echo "reset"
 		echo "============================================================================"								
 		echo "reset            : reset database"
+
+		echo "============================================================================"		
+		echo "testing"
+		echo "============================================================================"								
+		echo "run_features     : run Cucumber features"
+		echo "run_tests        : run Unit tests"
+		echo "run_specs        : run RSpecs "
 		
 		echo "============================================================================"		
 		echo "gems"
@@ -51,6 +58,25 @@ function rake_help {
 	fi
 }
 
+#=======================
+# Testing
+#=======================
+
+function run_features {
+	rake features
+}
+
+function run_tests {
+	rake tests
+}
+
+function run_specs {
+	rake spec
+}
+
+#=======================
+# Migrations
+#=======================
 
 function rdbm {
   name=$1
@@ -58,6 +84,10 @@ function rdbm {
   echo 'Migrating RAILS migrations...'
   rake db:migrate $@
 }
+
+#=======================
+# Rollback
+#=======================
 
 function rbk {
   echo 'Rolling back RAILS migrations...'
@@ -71,6 +101,10 @@ function rback {
   rake db:rollback STEP=$steps $@
 }
 
+#=======================
+# Redo
+#=======================
+
 function rdo {
   echo 'Redo RAILS migrations...'
   rake db:migrate:redo $@
@@ -83,10 +117,18 @@ function redo {
   rake db:migrate:redo STEP=$steps $@
 }
 
+#=======================
+# Reset
+#=======================
+
 function reset {
   echo "Resetting database..."
   rake db:reset
 }
+
+#=======================
+# Gems
+#=======================
 
 function rinst_gems {
 	rake gems:install

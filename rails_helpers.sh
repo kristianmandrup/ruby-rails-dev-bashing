@@ -30,7 +30,7 @@ function rails_help {
 		echo "============================================================================"						
 		
 		echo "rg_mig [name] *             : create named rails migration"		
-		echo "rg_mig_noe [name] *         : create named rails migration and run it now!"
+		echo "rg_mig_now [name] *         : create named rails migration and run it now!"
 
 		echo "============================================================================"		
 		echo "domain"
@@ -156,6 +156,9 @@ function rails_help {
 	
 }
 
+#=======================
+# Todo
+#=======================
 function r_todo_all { 
 	rake notes
 }
@@ -172,6 +175,9 @@ function r_optimize {
 	rake notes:optimize
 }
 
+#=======================
+# Misc
+#=======================
 
 function rgit_ignore { 
 	echo "Create Rails git .ignore"
@@ -182,6 +188,10 @@ function rgit_ignore {
 	echo config/database.yml >> .gitignore
 	echo db/*.sqlite3 >> .gitignore
 }
+
+#=======================
+# App
+#=======================
 
 function rls {
   name=$1
