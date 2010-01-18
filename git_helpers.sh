@@ -142,7 +142,7 @@ function git_exprj {
     shift 1
     echo "Pushing Git project '$name' to github"
     git add .
-    git commit -m 'first commit'
+    gc 'first commit'
     git remote add origin git@github.com:$GITHUB_NAME/$name.git
     git push origin master
 }
@@ -155,14 +155,14 @@ function git_exprj {
 function gc {
     msg=$1
     shift 1
-    git commit -a -m "$msg"
+    git commit -am "$msg"
 }
 
 function gc_all {
     msg=$1
     shift 1
 	git add . 
-    git commit -a -m "$msg"
+    gc "$msg"
 }
 
 function gpull {

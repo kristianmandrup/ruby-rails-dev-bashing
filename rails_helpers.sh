@@ -189,6 +189,22 @@ function rgit_ignore {
 	echo db/*.sqlite3 >> .gitignore
 }
 
+
+function rgit3_ignore { 
+	echo "Create Rails git .ignore"
+	rm -rf .gitignore
+	echo ".DS_Store" >> .gitignore
+	echo ".rake_tasks~" >> .gitignore
+	echo "config/database.yml" >> .gitignore
+	echo "doc/api" >> .gitignore
+	echo "log/*.log" >> .gitignore
+	echo "tmp/**/*" >> .gitignore
+	echo "db/*.sqlite3" >> .gitignore
+	echo "bin/*" >> .gitignore
+	echo "vendor/gems/*" >> .gitignore
+	echo "!vendor/gems/cache/" >> .gitignore
+}
+
 #=======================
 # App
 #=======================
@@ -287,7 +303,7 @@ function ss {
 function ssp {
   port = $1
   shift 1	
-  ss -p $port $@
+  ss -port=$port $@
 }
 
 function sg {
