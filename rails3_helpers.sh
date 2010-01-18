@@ -60,5 +60,11 @@ function rls3_gemfile {
 	echo 'gem "rack-mount",    :git => "git://github.com/rails/rack-mount.git"' >> Gemfile
 	echo 'gem "rack-test",     "~> 0.5.0"' >> Gemfile
 	echo 'gem "erubis",        "~> 2.6.0"' >> Gemfile
-	echo 'gem "rails", "3.0.pre", :git => "git://github.com/rails/rails.git"' >> Gemfile		 
+	echo 'gem "rails", "3.0.pre", :git => "git://github.com/rails/rails.git"' >> Gemfile
+
+	# mongo-mapper
+	echo 'gem "mongo"' >> Gemfile
+	echo 'gem "mongo_ext"' >> Gemfile 
+	echo 'gem "mongo_mapper",  "~> 0.6.10 "' >> Gemfile	
+			 
 }

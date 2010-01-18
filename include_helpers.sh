@@ -12,3 +12,4 @@ source bash_scripts/utils_helpers.sh
 source bash_scripts/install_helpers.sh
 source bash_scripts/testing_helpers.sh
 source bash_scripts/rails3_helpers.sh
+source bash_scripts/ruby_helpers.sh
