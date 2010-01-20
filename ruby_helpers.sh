@@ -37,3 +37,28 @@ function install_ruby_191 {
 	ruby -v
 }
 
+function ruby_rails_clean_install {
+	ruby_19_clean_install	
+	rails3_clean_install
+}
+
+function remove_ruby_gems {
+	ruby=$1	
+	sudo rm -rf /opt/local/lib/$ruby	
+}
+
+function uninstall_ruby {
+	ruby=$1
+	sudo port uninstall $ruby
+	sudo port clean $ruby
+	remove_ruby_gems $ruby
+}
+
+function ruby_19_clean_install {
+	uninstall_ruby ruby
+	uninstall_ruby ruby19
+	# remove rake
+	sudo rm -rf /opt/local/bin/rake
+	
+	sudo port install ruby19 +nosuffix
+}
