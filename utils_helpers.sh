@@ -8,19 +8,17 @@ function ll {
 	ls -al
 }
 
+function remove {
+	if [ -f $1 ]
+	then
+		rm -rf $1
+	fi
+}
+
 function link {
 	path=$1
 	link_alias=$2
 	shift 2
 	ln -s $path $link_alias
-}
-
-function install_homebrew {
-	sudo chown -R `whoami` /usr/local
-	
-	cd /usr/local
-	git init
-	git remote add origin git://github.com/mxcl/homebrew.git
-	git pull origin master
 }
 

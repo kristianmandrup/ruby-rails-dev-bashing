@@ -1,5 +1,7 @@
 # RAILS
 
+export RYANB_TEMPLATES_GITHUB=http://github.com/ryanb/rails-templates/raw/master
+
 function rails_help {
 	context=$1
 	shift	
@@ -157,6 +159,119 @@ function rails_help {
 }
 
 #=======================
+# App
+#=======================
+
+function rails_app {
+  name=$1
+  shift 1
+  echo 'Generating RAILS app...'
+  rails $name $@
+  cd $name
+  rgit_ignore
+}
+
+function rails_edge_app {
+  name=$1
+  shift 1
+  rls $name
+  echo 'Freezing rails edge ...'
+  rake rails:freeze:edge
+}
+
+function rails_app_template {
+  template=$1
+  appname=$2
+  shift 2
+  echo "Generating new RAILS app: $appname using local $template from ~/rails-templates/ "   
+  echo "Available templates: ..."
+  rails $appname -m ~/rails-templates/$template.rb $@
+}
+
+function rails_app_ryanb {
+  template=$1
+  appname=$2
+  shift 2
+  echo "Generating new RAILS app: $appname using $template from ryanb github repo"
+  echo "Available templates: ..."
+  rails $appname -m $RYANB_TEMPLATES_GITHUB/$template.rb $@
+}
+
+#=======================
+# Migration
+#=======================
+
+function rails_migration {
+  name=$1
+  shift 1
+  echo "Generating MIGRATION '$name' ..."   
+  sg migration $name $@
+}
+
+# create rails migration and run now
+function rails_migration_now {
+  name=$1
+  shift 1
+  rails_migration $name
+  rdbm
+}
+
+#=======================
+# Controller
+#=======================
+
+function rails_controller {
+  name=$1
+  shift 1
+  sg controller $name $@
+}
+
+#=======================
+# Model
+#=======================
+
+function rails_model {
+  name=$1
+  shift 1
+  sg model $name $@
+}
+
+#=======================
+# Resource
+#=======================
+
+function rails_resource {
+  name=$1
+  shift 1
+  sg resource $name $@
+}
+
+#=======================
+# Scaffold
+#=======================
+
+function rails_scaffold {
+  name=$1
+  shift 1
+  sg scaffold $name $@
+}
+
+#=======================
+# Server
+#=======================
+
+function ss {
+  script/server $@
+}
+
+function ssp {
+  port = $1
+  shift 1	
+  ss -port=$port $@
+}
+
+
+#=======================
 # Todo
 #=======================
 function r_todo_all { 
@@ -179,115 +294,11 @@ function r_optimize {
 # Misc
 #=======================
 
-function rgit_ignore { 
-	echo "Create Rails git .ignore"
-	rm -rf .gitignore
-	echo .DS_Store >> .gitignore
-	echo "log/*.log" >> .gitignore
-	echo tmp/**/* >> .gitignore	
-	echo config/database.yml >> .gitignore
-	echo db/*.sqlite3 >> .gitignore
-}
-
-
-function rgit3_ignore { 
-	echo "Create Rails git .ignore"
-	rm -rf .gitignore
-	echo ".DS_Store" >> .gitignore
-	echo ".rake_tasks~" >> .gitignore
-	echo "config/database.yml" >> .gitignore
-	echo "doc/api" >> .gitignore
-	echo "log/*.log" >> .gitignore
-	echo "tmp/**/*" >> .gitignore
-	echo "db/*.sqlite3" >> .gitignore
-	echo "bin/*" >> .gitignore
-	echo "vendor/gems/*" >> .gitignore
-	echo "!vendor/gems/cache/" >> .gitignore
-}
-
-#=======================
-# App
-#=======================
-
-function rls {
-  name=$1
-  shift 1
-  echo 'Generating RAILS app...'
-  rails $name $@
-  cd $name
-  rgit_ignore
-}
-
-function rls_edge {
-  name=$1
-  shift 1
-  rls $name
-  echo 'Freezing rails edge ...'
-  rake rails:freeze:edge
-}
-
-function rapp {
-  template=$1
-  appname=$2
-  shift 2
-  echo "Generating new RAILS app: $appname using local $template from ~/rails-templates/ "   
-  echo "Available templates: ..."
-  rails $appname -m ~/rails-templates/$template.rb $@
-}
-
-function rapp_rb {
-  template=$1
-  appname=$2
-  shift 2
-  echo "Generating new RAILS app: $appname using $template from ryanb github repo"
-  echo "Available templates: ..."
-  rails $appname -m http://github.com/ryanb/rails-templates/raw/master/$template.rb $@
-}
-
-function rg_mig {
-  name=$1
-  shift 1
-  echo "Generating MIGRATION '$name' ..."   
-  sg migration $name $@
-}
-
-# create rails migration and run now
-function rg_mig_now {
-  name=$1
-  shift 1
-  rmig $name
-  rdbm
-}
-
-function rg_con {
-  name=$1
-  shift 1
-  sg controller $name $@
-}
-
-function rg_modl {
-  name=$1
-  shift 1
-  sg model $name $@
-}
-
-function rg_res {
-  name=$1
-  shift 1
-  sg resource $name $@
-}
-
-function rg_scaf {
-  name=$1
-  shift 1
-  sg scaffold $name $@
-}
-
-function rcache_clear {
+function cache_clear {
 	rake tmp:cache:clear
 }
 
-function rlog_clear {
+function log_clear {
 	rake log:clear
 }
 
@@ -295,28 +306,17 @@ function routes {
 	rake routes
 }
 
-
-function ss {
-  script/server $@
-}
-
-function ssp {
-  port = $1
-  shift 1	
-  ss -port=$port $@
-}
-
-function sg {
+function generate {
   echo 'Rails GENERATE...'       
   script/generate $@
 }
 
-function rperf {
+function rails_performance {
   echo 'PERFORMANCE:'
   script/performance $@
 }
 
-function rabout {
+function rails_about {
   echo 'ABOUT RAILS:'   
   script/about $@
 }
@@ -331,32 +331,35 @@ function rdbcons {
   script/dbconsole $@
 }
 
-function rpl {
+#=======================
+# Plugin
+#=======================
+
+function rplugin {
   echo 'RAILS plugin ...'   
   script/plugin $@
 }
 
-function rpl_cr {
+function gen_plugin {
   echo 'Generating PLUGIN...'   
   sg plugin $@
 }
 
-function rpl_inst {
+function install_plugin {
   name=$1
   shift 1   
   echo "INSTALL PLUGIN '$name' ..."
   plugin install $name
 }
 
-function rpl_uninst {
+function uninstall_plugin {
   name=$1
   shift 1   
   echo "UNINSTALL PLUGIN '$name' ..."
   plugin uninstall $name
 }
 
-
-function rpl_inst_ghub {
+function plugin_from_github {
   repo_name=$2
   plugin_name=$1
   shift 2   

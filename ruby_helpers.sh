@@ -18,6 +18,14 @@ function reinstall_ruby_191 {
 	sudo make install	
 }
 
+function install_rubygems {
+	curl -O http://files.rubyforge.vm.bytemark.co.uk/rubygems/rubygems-1.3.5.tgz
+	tar xzvf rubygems-1.3.5.tgz
+	cd rubygems-1.3.5
+	sudo /usr/local/bin/ruby setup.rb
+	cd ..	 
+}
+
 function install_ruby_191 {
 	cd ~
   	mkdir src

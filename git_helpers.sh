@@ -123,11 +123,11 @@ function git_prj_new {
 }
 
 # create new git project from existing folder
-function git_prj {
+function rails_git_prj {
     name=$1
     shift 1
     echo "Generating Git project '$name' ..."
-	rgit_ignore
+	rails_git_ignore
 	echo "Init local repository"
     git init
 	echo "Create README"
@@ -135,6 +135,19 @@ function git_prj {
     git add README
     git_exprj $name
 }
+
+function git_prj {
+    name=$1
+    shift 1
+    echo "Generating Git project '$name' ..."
+	echo "Init local repository"
+    git init
+	echo "Create README"
+    touch README
+    git add README
+    git_exprj $name
+}
+
 
 # update and push existing git project to github
 function git_exprj {
@@ -147,6 +160,50 @@ function git_exprj {
     git push origin master
 }
 
+
+#=======================
+# Ignore
+#=======================
+
+function rails_git_ignore { 
+	echo "Create Rails git .ignore"
+	rm -rf .gitignore
+	echo .DS_Store >> .gitignore
+	echo "log/*.log" >> .gitignore
+	echo tmp/**/* >> .gitignore	
+	echo config/database.yml >> .gitignore
+	echo db/*.sqlite3 >> .gitignore
+}
+
+function rails3_git_ignore { 
+	echo "Create Rails git .ignore"
+	rm -rf .gitignore
+	echo ".DS_Store" >> .gitignore
+	echo ".rake_tasks~" >> .gitignore
+	echo "config/database.yml" >> .gitignore
+	echo "doc/api" >> .gitignore
+	echo "log/*.log" >> .gitignore
+	echo "tmp/**/*" >> .gitignore
+	echo "db/*.sqlite3" >> .gitignore
+	echo "bin/*" >> .gitignore
+	echo "vendor/gems/*" >> .gitignore
+	echo "!vendor/gems/cache/" >> .gitignore
+}
+
+
+function jewel_git_ignore { 
+	echo "Create Jewel git .ignore"
+	rm -rf .gitignore
+	echo .DS_Store >> .gitignore
+	echo "pkg/*" >> .gitignore
+}
+
+function gem_git_ignore { 
+	echo "Create Gem git .ignore"
+	rm -rf .gitignore
+	echo .DS_Store >> .gitignore
+	echo "*.gem" >> .gitignore
+}
 
 #=======================
 # Sync

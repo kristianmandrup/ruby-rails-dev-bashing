@@ -131,28 +131,21 @@ function gem_help {
 # Install
 #=======================
 
-function gem_install {
-  	name=$1
-  	shift 1	
-	gem install $name.gem --local	
-}
-
-function sgem_install {
+function gem_install_local {
   	name=$1
   	shift 1	
 	sudo gem install $name.gem --local	
 }
 
-function sgem_remove {
-  	name=$1
-  	shift 1	
-	sudo gem uninstall $name
+function gem_install {
+	sudo gem install $@
 }
+
 
 function gem_remove {
   	name=$1
   	shift 1	
-	gem uninstall $name
+	sudo gem uninstall $name
 }
 
 #=======================
@@ -175,7 +168,7 @@ function jewel_build {
 }
 
 function jewel_install {
-	rake install	
+	sudo rake install	
 }
 
 
@@ -192,6 +185,11 @@ function gemcutter_push {
 	gem push $name.gem
 }
 
+function jewel_push {
+  	name=$1
+  	shift 1    	
+	gem push pkg/$name.gem
+}
 
 #=======================
 # Version

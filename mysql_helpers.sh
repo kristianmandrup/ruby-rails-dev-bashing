@@ -2,6 +2,14 @@ alias start_mysql="$MYSQLCOM start"
 alias stop_mysql="$MYSQLCOM stop"
 alias restart_mysql="$MYSQLCOM restart"
 
+function setup_mysql_sock {
+	sudo ln -s /opt/local/var/run/mysql5/mysqld.sock /tmp/mysql.sock
+}
+
+function mysql_autostart {
+	sudo launchctl load -w /Library/LaunchDaemons/org.macports.mysql5.plist
+}
+
 # MYSQL
 
 function mysql_help {
