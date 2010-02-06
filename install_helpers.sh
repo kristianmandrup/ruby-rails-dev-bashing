@@ -26,7 +26,7 @@ function install_rubygems {
     rubygems-1.3.5
     ruby setup.rb
     sudo gem update
-    rm -rf rubygems-1.3.5.tgz
+    rm -rf rubygems-1.3.5.tgz	
     rm -rf rubygems-1.3.5	
 }
 

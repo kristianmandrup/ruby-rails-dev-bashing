@@ -216,6 +216,7 @@ function gc {
     shift 1
     git commit -am "$msg"
 	git_latest
+	gpush
 }
 
 function gc_all {
