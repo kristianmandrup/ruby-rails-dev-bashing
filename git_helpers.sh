@@ -426,7 +426,7 @@ function git_clone {
   git clone $@
 }
 
-function gcl_hub {
+function git_clone_hub {
   name=$1
   pl_name=$2
   shift 2
@@ -434,7 +434,7 @@ function gcl_hub {
   git clone git://github.com/$name/$pl_name.git
 }
 
-function gcl_my {
+function git_clone_my_hub {
   name=$1
   shift 1
   echo "Git clone own project from github '$name'"

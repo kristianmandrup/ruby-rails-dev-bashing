@@ -63,7 +63,7 @@ function heroku_help {
 # App
 #=======================
 # create Heroku application (by setting identifier in .git)
-function hcr {
+function heroku_create_app {
      name=$1
      shift 1
      echo "Heroku CREATE app '$name' ..."
@@ -73,13 +73,13 @@ function hcr {
 #=======================
 # Deploy
 #=======================
-function hpush_m {
+function heroku_push_master {
      echo 'Heroku PUSH app to master'
      heroku push origin master
 }
 
 
-function hpush {
+function heroku_push {
      echo 'Heroku PUSH app'
      heroku push
 }
@@ -87,23 +87,23 @@ function hpush {
 #=======================
 # Database
 #=======================
-function hdb_push {
+function heroku_push_db {
       echo 'Heroku PUSH locl database to server'
      heroku db:push
 }
 
-function hdb_pull {
+function heroku_pull_db {
       echo 'Heroku PULL database from server to local database'
      heroku db:pull
 }
 
 
-function hdb_mig {
+function heroku_migrate_db {
       echo 'Heroku RUN database migration...'
      heroku rake db:migrate
 }
 
-function hdb_reset {
+function heroku_reset_db {
       echo 'Heroku RESET database ...'
      heroku rake db:reset
 }
