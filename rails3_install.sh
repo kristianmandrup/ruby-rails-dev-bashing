@@ -41,7 +41,7 @@ function db_install {
 }
 
 function gems_test_install {
-	gem_install rspec rspec-rails cucumber cucumber-rails webrat pickle autotest-rails
+	gem_install rspec rspec-rails cucumber cucumber-rails webrat pickle autotest-rails selenium-client database_cleaner
 }
 
 function gems_jeweler_install {

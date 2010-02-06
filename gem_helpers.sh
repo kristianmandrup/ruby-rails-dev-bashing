@@ -134,18 +134,18 @@ function gem_help {
 function gem_install_local {
   	name=$1
   	shift 1	
-	sudo gem install $name.gem --local	
+	gem install $name.gem --local	
 }
 
 function gem_install {
-	sudo gem install $@
+	gem install $@
 }
 
 
 function gem_remove {
   	name=$1
   	shift 1	
-	sudo gem uninstall $name
+	gem uninstall $name
 }
 
 #=======================
@@ -168,7 +168,7 @@ function jewel_build {
 }
 
 function jewel_install {
-	sudo rake install	
+	rake install	
 }
 
 

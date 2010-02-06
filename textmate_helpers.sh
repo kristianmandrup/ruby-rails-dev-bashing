@@ -19,3 +19,8 @@ function txb_instl {
 	svn co http://svn.textmate.org/trunk/Bundles/$name
 	osascript -e 'tell app "TextMate" to reload bundles'
 }
+
+function textmate_rspec {
+	cd ~/Library/Application\ Support/TextMate/Bundles/
+	git clone git://github.com/dchelimsky/rspec-tmbundle.git RSpec.tmbundle
+}

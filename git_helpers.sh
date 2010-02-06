@@ -1,3 +1,5 @@
+export GIT_EDITOR=mate
+export EDITOR=mate
 # GIT
 
 function git_help {
@@ -213,6 +215,7 @@ function gc {
     msg=$1
     shift 1
     git commit -am "$msg"
+	git_latest
 }
 
 function gc_all {
@@ -237,47 +240,180 @@ function gpush_m {
   git push origin master
 }
 
+#=======================
+# Tag
+#=======================
+
+function git_tag {
+	tag_name=$1
+	branch_name=$2
+	shift 2
+	echo "Tagging branch $branch_name as '$tag_name'" 
+	git tag $tag_name $branch_name
+	git tag
+}
+
+#=======================
+# Patch
+#=======================
+
+# Checkout branch [name]
+function git_patch {
+	git add -p	
+}
+
 
 #=======================
 # Branch
 #=======================
 
-# create branch [name]
-function gcb {
-    name=$1
-    shift 1
-	git checkout -b $name	
+function list_branches {
+	git branch
 }
 
-# switch branch to [name]
-function gsb {
+function rename_branch {
+    old_name=$1
+	new_name$2
+    shift 2
+	echo "Renaming branch '$old_name' to '$new_name'"
+	git branch -m master mymaster
+}
+
+function rename_master_branch {
+    name=$1
+    shift 1
+	echo "Renaming 'master' branch to '$name'"
+	git branch -m master $branch
+}
+
+# create new branch
+
+function git_new_branch_go {
+    name=$1
+    shift 1
+	echo "Creating new branch $name"
+	git branch -b $name
+}
+
+function git_new_branch {
+    name=$1
+    shift 1
+	echo "Creating new branch $name"
+	git branch $name
+}
+
+
+# create branch from master
+function git_branch_f_master {
+    name=$1
+    shift 1
+	echo "Creating branch $name from master"
+	git branch $name master
+}
+
+function git_branch_f_master_go {
+    name=$1
+    shift 1
+	echo "Creating branch $name from master"
+	git branch -b $name master
+}
+
+
+# Checkout branch [name]
+function git_get_branch {
     name=$1
     shift 1
 	git checkout $name	
 }
 
+function git_remove_last {
+	git reset --hard HEAD^
+}
+
+# cherry-pick
+function git_pick {
+    name=$1
+	pick=$2
+    shift 1
+	git_get_branch $name
+	echo "Cherry-picking '$pick'"	
+	git cherry-pick $pick	
+}
+
+function git_pick_commit {
+	git_pick $@
+	git commit
+}
+
 # switch branch to master
-function gsbm {
+function git_get_master {
+	echo "Get master branch"
 	git checkout master	
 }
 
-# merge branch with master branch
-function gmbm {
+function git_merge_w_master {
     name=$1
     shift 1
-	swb_m
+	git_get_master
+	echo "Merging '$name' with master branch"	
+	git merge $name	
+}
+
+function git_squash_merge_w_master {
+    name=$1
+    shift 1
+	git_get_master
+	echo "Squash merging '$name' with master branch"	
+	git merge --squash $name	
+}	
+
+# merge branch with master branch
+function git_merge_branch_master {
+    name=$1
+    shift 1
+	git_get_master
 	echo "Merging '$name' with master branch"	
 	git pull . $name	
 }
 
+function git_rebase_branch {
+    branch=$1
+    shift 1
+	echo "Rebase current branch with $branch"
+	git rebase $branch	
+}
+
+function git_merge_branch_master {
+	git_get_master
+	git_rebase_branch $branch
+	git_delete_branch $branch
+}
+	
+function git_branch_from_tag {
+    branch=$1
+    tag=$2
+    shift 2
+	echo "Create branch $branch from tag $tag"
+	git branch $branch $tag
+	git_get_branch		
+}		
+	
+function git_delete_branch {
+    branch=$1
+    shift 1
+	echo "Deleting branch $branch"
+	git branch -d $branch	
+	
+}	
+	
 # merge master branch with current branch
-function gmmc {
+function git_merge_master_w_current {
 	echo "Merging master branch with current branch"
 	git rebase master	
 }
 
 # merge master branch
-function gmm {
+function git_merge_master {
 	git merge master
 }
 
@@ -285,7 +421,7 @@ function gmm {
 #=======================
 # Clone
 #=======================
-function gcl {
+function git_clone {
   echo "Git clone"
   git clone $@
 }
@@ -305,10 +441,62 @@ function gcl_my {
   git clone git@github.com:$GITHUB_NAME/$name.git
 }
 
+#=======================
+# Move
+#=======================
+
+function git_move {
+	$original_file=$1
+	$new_file=$2
+	shift 2
+	echo "Git moving $original_file --> $new_file"
+	git mv $original_file $new_file
+	git_stat
+}
+
+
+#=======================
+# Diff
+#=======================
+
+function git_diff_worktree {
+	git diff
+}
+
+function git_diff_staging {
+	git diff --cached
+}
+
+function git_diff_repo {
+	git diff HEAD
+}
+
 
 #=======================
 # Misc
 #=======================
+
+function git_archive_tag {
+	$tag=$1
+	$name=$2
+	$format=$3	
+	shift 3
+	echo "Archiving tag $tag to $name.$format.gzip"
+	git archive --format=$format --prefix=$name-$tag/ $tag | gzip > $name-$tag.$format.gzip
+}
+
+function git_latest {
+	git log -1
+}
+
+function git_pretty {
+	git log --pretty=oneline
+}
+
+function git_stat {
+	git status
+}
+
 
 function github_config {
   	user=$1
@@ -316,6 +504,9 @@ function github_config {
   	shift 2
 	git config --global github.user $user
 	git config --global github.token $token	
+	# turn on color coding!
+	git config --global color.ui "auto"	
+	git config --global core.editor "mate"		
 }
 
 
